@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 public class Hangman {
 	public static List<String> getWords() {
         List<String> words = new ArrayList<>();
