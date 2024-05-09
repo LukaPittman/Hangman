@@ -64,6 +64,7 @@ public class Hangman {
 		Scanner sc = new Scanner(System.in);
 		
 		
+		
 	}
 
 }
