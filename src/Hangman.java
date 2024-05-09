@@ -4,8 +4,8 @@ import java.util.Scanner;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 public class Hangman {
-	public static List<String> getWords() {
-        List<String> words = new ArrayList<>();
+	public static List<RandomWord> getWords() {
+        List<RandomWord> words = new ArrayList<>();
         words.add("computer");
         words.add("programming");
         words.add("hangman");
@@ -62,9 +62,8 @@ public class Hangman {
     }
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		randomWord = [""];
-		index = 
-		Word = randomWord[index];
+		index = MATH.Random
+		Word = RandomWord[index];
 	}
 
 }
