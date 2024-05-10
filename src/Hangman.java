@@ -71,20 +71,24 @@ public class Hangman {
 		String chosenWord = words.get(index);
 		
 		List<Character> characters = new ArrayList<>();	
-		for( char c :chosenWord.toCharArray) {
+		for( char c :chosenWord.toCharArray()) {
 			characters.add(c);
 		}
 		
-		
-		int guess = sc.toString();
-		System.out.println("You're correct!");
-		for ()
-		while (Character[] != guess) {
+		String guess = sc.nextLine();
+		char letter;
+		if (guess.length() > 1) {
+			//This is a word
 			System.out.println("Incorrect. Try again.");
-		    guess = sc.nextInt();
+			guess = sc.nextLine();
+		} else {
+			letter = guess.charAt(0);
 		}
+		for(int i=1; i<=characters.size(); i++) {
+			while (characters.get(i) != letter) {
+				System.out.println("Incorrect. Try again.");
+				guess = sc.nextLine();
+			}	
 		sc.close(); //stop looking for input
-
+		}
 	}
-
-}
