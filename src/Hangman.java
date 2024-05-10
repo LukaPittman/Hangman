@@ -3,8 +3,31 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-public class Hangman {
+import javax.swing.JButton;
+
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+public class Hangman extends JFrame{
 	
+	
+		
+	
+public Hangman() {
+	setTitle("Hangman");
+	setSize(1200,800);
+	setDefaultCloseOperation(EXIT_ON_CLOSE);
+	setLayout(new GridLayout(4,2,5,5));
+	setResizable(false);
+	
+	
+	
+}
 	
 	public static ArrayList<String> getWords() {
 		ArrayList<String> words = new ArrayList<String>();
@@ -64,6 +87,9 @@ public class Hangman {
     }
 	
 	public static void main(String[] args) {
+		Hangman hangman = new Hangman();
+		hangman.setVisible(true);
+		
 		Scanner sc = new Scanner(System.in);
 		
 		int index = (int)(Math.random()*50);
@@ -71,15 +97,20 @@ public class Hangman {
 		String chosenWord = words.get(index);
 		
 		List<Character> characters = new ArrayList<>();	
-		for( char c :chosenWord.toCharArray) {
+		for( char c :chosenWord.toCharArray()) {
 			characters.add(c);
 		}
+		for (Character ch : characters) {
+            JLabel label = new JLabel(ch.toString()); // Create JLabel with character text
+            label.setFont(new Font("Arial", Font.PLAIN, 24)); // Set font size and style
+            hangman.add(label); // Add label to the frame
+        }
 		
-		
-		int guess = sc.toString();
+		String guess = sc.toString();
 		System.out.println("You're correct!");
+
 		for ()
-		while (Character[] != guess) {
+		while (Character[] != ) {
 			System.out.println("Incorrect. Try again.");
 		    guess = sc.nextInt();
 		}
