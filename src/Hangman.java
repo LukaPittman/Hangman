@@ -4,8 +4,10 @@ import java.util.Scanner;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 public class Hangman {
-	public static List<String> getWords() {
-        List<String> words = new ArrayList<>();
+	
+	
+	public static List<RandomWord> getWords() {
+        List<RandomWord> words = new ArrayList<>();
         words.add("computer");
         words.add("programming");
         words.add("hangman");
@@ -60,11 +62,18 @@ public class Hangman {
         words.add("css");
         return words;
     }
+	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
+		List<Character> characters = new ArrayList<>();	
+		for( char c :Word.toCharArray) {
+			characters.add(c);
+		}
+		index = MATH.Random
+		Word = RandomWord[index];
 		
-		
-		
+
+
 	}
 
 }
