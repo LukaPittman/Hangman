@@ -100,22 +100,31 @@ public Hangman() {
 		for( char c :chosenWord.toCharArray()) {
 			characters.add(c);
 		}
+
+		String guess = sc.nextLine();
+		char letter;
+		if (guess.length() > 1) {
+			//This is a word
+
+			System.out.println("Incorrect. Try again.");
+			guess = sc.nextLine();
+		} else {
+			letter = guess.charAt(0);
+		}
+		for(int i=1; i<=characters.size(); i++) {
+			while (characters.get(i) != letter) {
+				System.out.println("Incorrect. Try again.");
+				guess = sc.nextLine();
+			}	
+		sc.close(); //stop looking for input
+		}
+		
 		for (Character ch : characters) {
             JLabel label = new JLabel(ch.toString()); // Create JLabel with character text
             label.setFont(new Font("Arial", Font.PLAIN, 24)); // Set font size and style
             hangman.add(label); // Add label to the frame
         }
-		
-		String guess = sc.toString();
-		System.out.println("You're correct!");
-
-		for ()
-		while (Character[] != ) {
-			System.out.println("Incorrect. Try again.");
-		    guess = sc.nextInt();
-		}
-		sc.close(); //stop looking for input
 
 	}
-
+	
 }
