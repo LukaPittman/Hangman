@@ -4,8 +4,10 @@ import java.util.Scanner;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 public class Hangman {
-	public static List<RandomWord> getWords() {
-        List<RandomWord> words = new ArrayList<>();
+	
+	
+	public static ArrayList<String> getWords() {
+		ArrayList<String> words = new ArrayList<String>();
         words.add("computer");
         words.add("programming");
         words.add("hangman");
@@ -60,23 +62,28 @@ public class Hangman {
         words.add("css");
         return words;
     }
+	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		//new code below
-		System.out.println("You're correct!");
-		sc.close(); //stop looking for input
-		int index = (int)(Math.random()*50);
-		Word = RandomWord[index];
 		
-		//characterlist
+		int index = (int)(Math.random()*50);
+		ArrayList<String> words = getWords();
+		String chosenWord = words.get(index);
+		
+		List<Character> characters = new ArrayList<>();	
+		for( char c :chosenWord.toCharArray) {
+			characters.add(c);
+		}
 		
 		
 		int guess = sc.toString();
+		System.out.println("You're correct!");
 		for ()
 		while (Character[] != guess) {
 			System.out.println("Incorrect. Try again.");
 		    guess = sc.nextInt();
 		}
+		sc.close(); //stop looking for input
 
 	}
 
