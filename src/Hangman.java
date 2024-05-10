@@ -1,10 +1,10 @@
+// Imports
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import javax.swing.JButton;
-
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -13,12 +13,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+
+
 public class Hangman extends JFrame{
 	
 	
 		
 	
 public Hangman() {
+	// Creates the JFrame and GUI
+	
 	setTitle("Hangman");
 	setSize(1200,800);
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -28,8 +32,9 @@ public Hangman() {
 	
 	
 }
-	
+	// List of words used for Hang Man
 	public static ArrayList<String> getWords() {
+		// The list
 		ArrayList<String> words = new ArrayList<String>();
         words.add("computer");
         words.add("programming");
@@ -85,34 +90,36 @@ public Hangman() {
         words.add("css");
         return words;
     }
-	
+	// Main Method
 	public static void main(String[] args) {
-		Hangman hangman = new Hangman();
+		
+		Hangman hangman = new Hangman(); //Creates the window
 		hangman.setVisible(true);
 		
-		Scanner sc = new Scanner(System.in);
+		Scanner sc = new Scanner(System.in); // Scanner for user input
 		
-		int index = (int)(Math.random()*50);
+		int index = (int)(Math.random()*50); //Chooses random word out of the list
 		ArrayList<String> words = getWords();
 		String chosenWord = words.get(index);
 		
-		List<Character> characters = new ArrayList<>();	
+		List<Character> characters = new ArrayList<>();	// Separates the chosen word into a list of its individual characters
 		for( char c :chosenWord.toCharArray()) {
 			characters.add(c);
 		}
 
-		String guess = sc.nextLine();
+		String guess = sc.nextLine();   // Checks if guess is a letter or a word
 		char letter='x';//default first guess
 
 		if (guess.length() > 1) {
 			//This is a word
 
-			System.out.println("Incorrect. Try again.");
+			System.out.println("Incorrect. Try again."); // Guess is wrong
 			guess = sc.nextLine();
 		} else {
 			letter = guess.charAt(0);
 		}
-		for(int i=1; i<=characters.size(); i++) {
+		//  Repeatedly ask user for guesses and checks to see if correct
+		for(int i=1; i<=characters.size(); i++) {          
 			while (characters.get(i) != letter) {
 				System.out.println("Incorrect. Try again.");
 				
@@ -120,6 +127,8 @@ public Hangman() {
 			}	
 		sc.close(); //stop looking for input
 		}
+		
+		// Creates JLabel for each of the characters in the word with the letters
 		
 		for (Character ch : characters) {
             JLabel label = new JLabel(ch.toString()); // Create JLabel with character text
