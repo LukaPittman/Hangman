@@ -102,17 +102,17 @@ public Hangman() {
 		}
 
 		String guess = sc.nextLine();
-		char letter;
+		char Letter = 'x';
 		if (guess.length() > 1) {
 			//This is a word
 
 			System.out.println("Incorrect. Try again.");
 			guess = sc.nextLine();
 		} else {
-			letter = guess.charAt(0);
+			Letter = guess.charAt(0);
 		}
 		for(int i=1; i<=characters.size(); i++) {
-			while (characters.get(i) != letter) {
+			while (characters.get(i) != Letter) {
 				System.out.println("Incorrect. Try again.");
 				guess = sc.nextLine();
 			}	
