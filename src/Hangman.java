@@ -103,6 +103,7 @@ public Hangman() {
 
 		String guess = sc.nextLine();
 		char letter='x';//default first guess
+
 		if (guess.length() > 1) {
 			//This is a word
 
