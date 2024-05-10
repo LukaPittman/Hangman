@@ -62,8 +62,21 @@ public class Hangman {
     }
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		index = MATH.Random
+		//new code below
+		System.out.println("You're correct!");
+		sc.close(); //stop looking for input
+		int index = (int)(Math.random()*50);
 		Word = RandomWord[index];
+		
+		//characterlist
+		
+		
+		int guess = sc.toString();
+		for ()
+		while (Character[] != guess) {
+			System.out.println("Incorrect. Try again.");
+		    guess = sc.nextInt();
+		}
 
 	}
 
