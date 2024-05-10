@@ -102,7 +102,7 @@ public Hangman() {
 		}
 
 		String guess = sc.nextLine();
-		char letter;
+		char letter='x';//default first guess
 		if (guess.length() > 1) {
 			//This is a word
 
@@ -114,6 +114,7 @@ public Hangman() {
 		for(int i=1; i<=characters.size(); i++) {
 			while (characters.get(i) != letter) {
 				System.out.println("Incorrect. Try again.");
+				
 				guess = sc.nextLine();
 			}	
 		sc.close(); //stop looking for input
