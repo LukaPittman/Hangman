@@ -5,6 +5,8 @@ import java.util.Scanner;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import javax.swing.JButton;
+
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -26,7 +28,7 @@ public Hangman() {
 	setTitle("Hangman");
 	setSize(1200,800);
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
-	setLayout(new GridLayout(4,2,5,5));
+	setLayout(null);
 	setResizable(false);
 	
 	
@@ -92,13 +94,17 @@ public Hangman() {
     }
 	// Main Method
 	public static void main(String[] args) {
+
 		int correctLetter=0; //number of correct letters in word guessed from individual guess
 		int wrongGuess=0; //wrong guessed letter (guess not in word at all)
 		int end = 5; //max number of wrong guesses allowed (adjust for difficulty)
+
 		Hangman hangman = new Hangman(); //Creates the window
-		hangman.setVisible(true);
+		
 		
 		Scanner sc = new Scanner(System.in); // Scanner for user input
+		
+		
 		
 		int index = (int)(Math.random()*50); //Chooses random word out of the list
 		ArrayList<String> words = getWords();
@@ -110,12 +116,25 @@ public Hangman() {
 		}
 
 		// Creates JLabel for each of the characters in the word with the letters
-		
+		int XAxis = 100;
+		int YAxis = 100;
 		for (Character ch : characters) {
-		    JLabel label = new JLabel(ch.toString()); // Create JLabel with character text
-		    label.setFont(new Font("Arial", Font.PLAIN, 24)); // Set font size and style
-		    hangman.add(label); // Add label to the frame
+            // Create a JLabel for the current character
+            //JLabel label = new JLabel(ch.toString());
+            JLabel label = new JLabel("__");
+            label.setFont(new Font("Arial", Font.PLAIN, 24)); // Set font size and style
+            label.setBounds(XAxis, YAxis, 30,30);
+            hangman.add(label); // Add the label to the frame
+            
+            XAxis += 35;
+            
+            
 		}
+		
+		
+		hangman.setLocationRelativeTo(null);
+		hangman.setVisible(true);
+		
 
 		String guess = sc.nextLine();   // Checks if guess is a letter or a word
 		char letter='x';//default first guess
