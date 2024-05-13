@@ -92,7 +92,9 @@ public Hangman() {
     }
 	// Main Method
 	public static void main(String[] args) {
-		
+		int correctLetter=0; //number of correct letters in word guessed from individual guess
+		int wrongGuess=0; //wrong guessed letter (guess not in word at all)
+		int end = 5; //max number of wrong guesses allowed (adjust for difficulty)
 		Hangman hangman = new Hangman(); //Creates the window
 		hangman.setVisible(true);
 		
@@ -120,22 +122,38 @@ public Hangman() {
 
 		if (guess.length() > 1) {
 			//This is a word
-
 			System.out.println("Incorrect. Try again."); // Guess is wrong
 			guess = sc.nextLine();
 		} else {
-			letter = guess.charAt(0);
-		}
-		//  Repeatedly ask user for guesses and checks to see if correct
-		for(int i=1; i<=characters.size(); i++) {          
-			while (characters.get(i) != letter) {
-				System.out.println("Incorrect. Try again.");
-				
-				guess = sc.nextLine();
-			}	
-		sc.close(); //stop looking for input
+			letter = guess.charAt(0); //takes the first character of the word 
 		}
 		
+		List<Character> guesses= new ArrayList<>();	// Stores all guesses into a list
+		//  Repeatedly ask user for guesses and checks to see if correct
+		for(int i=1; i<=characters.size(); i++) {          
+			while (characters.get(i) != letter) { //guess not any letter in chosenword
+				System.out.println("Incorrect. Try again.");
+				wrongGuess+=1;
+				guesses.add(letter);
+				//add code to create labels for the wrong guesses to be displayed
+				
+				guess = sc.nextLine();
+				if (wrongGuess==end) {//max number of wrong guesses reached
+					sc.close(); //stop looking for input
+					System.out.println("Game over!");
+				}
+			}
+			for(int g=1; g<=characters.size(); g++) { //goes through letters in chosenword
+				if (characters.get(g) == letter) { //guess is some or 1 letter in chosenword
+					correctLetter+=1; //add correct number of letters
+					//add code to print the individual label with that character 
+					
+				}
+				if (correctLetter == characters.size()) { //guessed all letters in chosenword
+					sc.close(); //stop looking for input
+					System.out.println("Game complete!");
+				}
+			}
+		}
 	}
-	
 }
