@@ -120,7 +120,6 @@ public Hangman() {
 		int YAxis = 100;
 		for (Character ch : characters) {
             // Create a JLabel for the current character
-            //JLabel label = new JLabel(ch.toString());
             JLabel label = new JLabel("__");
             label.setFont(new Font("Arial", Font.PLAIN, 24)); // Set font size and style
             label.setBounds(XAxis, YAxis, 30,30);
@@ -154,8 +153,18 @@ public Hangman() {
 				System.out.println("Incorrect. Try again.");
 				wrongGuess+=1;
 				guesses.add(letter);
-				//add code to create labels for the wrong guesses to be displayed
-				
+				//create Jlabels for each of the wrong guesses (to be displayed)
+				int DXAxis = 700;
+				int DYAxis = 100;
+				for (Character ch : guesses) {
+		            // Create a JLabel for the current character
+		            JLabel label = new JLabel(ch.toString());
+		            label.setFont(new Font("Arial", Font.PLAIN, 24)); // Set font size and style
+		            label.setBounds(DXAxis, DYAxis, 30,30);
+		            hangman.add(label); // Add the label to the frame
+		            
+		            XAxis += 35;
+				}
 				guess = sc.nextLine();
 				if (wrongGuess==end) {//max number of wrong guesses reached
 					sc.close(); //stop looking for input
@@ -174,5 +183,6 @@ public Hangman() {
 				}
 			}
 		}
+
 	}
 }
