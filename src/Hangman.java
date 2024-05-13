@@ -107,6 +107,14 @@ public Hangman() {
 			characters.add(c);
 		}
 
+		// Creates JLabel for each of the characters in the word with the letters
+		
+		for (Character ch : characters) {
+		    JLabel label = new JLabel(ch.toString()); // Create JLabel with character text
+		    label.setFont(new Font("Arial", Font.PLAIN, 24)); // Set font size and style
+		    hangman.add(label); // Add label to the frame
+		}
+
 		String guess = sc.nextLine();   // Checks if guess is a letter or a word
 		char letter='x';//default first guess
 
@@ -128,14 +136,6 @@ public Hangman() {
 		sc.close(); //stop looking for input
 		}
 		
-		// Creates JLabel for each of the characters in the word with the letters
-		
-		for (Character ch : characters) {
-            JLabel label = new JLabel(ch.toString()); // Create JLabel with character text
-            label.setFont(new Font("Arial", Font.PLAIN, 24)); // Set font size and style
-            hangman.add(label); // Add label to the frame
-        }
-
 	}
 	
 }
