@@ -116,14 +116,14 @@ public Hangman() {
 		}
 
 		// Creates JLabel for each of the characters in the word with the letters
-		int XAxis = 100;
-		int YAxis = 100;
+		int XAxis = 700;
+		int YAxis = 600;
 		for (Character ch : characters) {
             // Create a JLabel for the current character
             //JLabel label = new JLabel(ch.toString());
             JLabel label = new JLabel("__");
             label.setFont(new Font("Arial", Font.PLAIN, 24)); // Set font size and style
-            label.setBounds(XAxis, YAxis, 30,30);
+            label.setBounds(XAxis, YAxis, 50,50);
             hangman.add(label); // Add the label to the frame
             
             XAxis += 35;
