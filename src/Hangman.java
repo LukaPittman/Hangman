@@ -6,19 +6,25 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 import javax.swing.JButton;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 
 
 public class Hangman extends JFrame{
-	
+	private static Graphics globalGraphics; // Global Graphics object
+
 	
 		
 	
@@ -92,9 +98,41 @@ public Hangman() {
         words.add("css");
         return words;
     }
+	public void paint(Graphics g) {
+		super.paint(g);
+		
+		
+
+	   
+	     
+	    g.setColor(Color.BLACK);
+
+        // Set the stroke thickness
+        Graphics2D g2d = (Graphics2D) g;
+        Stroke oldStroke = g2d.getStroke();
+        g2d.setStroke(new BasicStroke(5)); // Set the line thickness to 5 pixels
+
+        // Draw the vertical line
+        int x = 200; // X-coordinate of the line (center of the frame)
+        int startY = 200; // Starting Y-coordinate of the line
+        int endY = 660; // Ending Y-coordinate of the line
+        
+        // Main body Straight Line/Vertical
+        g2d.drawLine(x, startY, x, endY);
+        // Bottom base line/Horizontal
+        g2d.drawLine(125, 660,275 , 660);
+        // Top Line/Horizontal
+        g2d.drawLine(200, 200, 400, 200);
+        // Hanging line/Vertical
+        g2d.drawLine(400, 200, 400, 250);
+        // Restore the previous stroke
+        g2d.setStroke(oldStroke);
+        
+	}
+	
 	// Main Method
 	public static void main(String[] args) {
-
+		SwingUtilities.invokeLater(() -> new Hangman());
 		int correctLetter=0; //number of correct letters in word guessed from individual guess
 		int wrongGuess=0; //wrong guessed letter (guess not in word at all)
 		int end = 5; //max number of wrong guesses allowed (adjust for difficulty)
@@ -136,7 +174,7 @@ public Hangman() {
 		
 
 		String guess = sc.nextLine();   // Checks if guess is a letter or a word
-		char letter='x';//default first guess
+		char letter=' ';//default first guess
 
 		if (guess.length() > 1) {
 			//This is a word
@@ -162,7 +200,6 @@ public Hangman() {
 		            label.setFont(new Font("Arial", Font.PLAIN, 24)); // Set font size and style
 		            label.setBounds(DXAxis, DYAxis, 30,30);
 		            hangman.add(label); // Add the label to the frame
-		            
 		            XAxis += 35;
 				}
 				guess = sc.nextLine();
@@ -171,6 +208,15 @@ public Hangman() {
 					System.out.println("Game over!");
 				}
 			}
+			
+				if(wrongGuess==1) {
+					int centerX = 600;
+			        int centerY = 400;
+			        int radius = 50;
+					// Draw the circle
+					globalGraphics.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
+					
+				}
 			for(int g=1; g<=characters.size(); g++) { //goes through letters in chosenword
 				if (characters.get(g) == letter) { //guess is some or 1 letter in chosenword
 					correctLetter+=1; //add correct number of letters
