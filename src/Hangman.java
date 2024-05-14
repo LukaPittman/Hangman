@@ -147,7 +147,7 @@ public Hangman() {
 			letter = guess.charAt(0); //takes the first character of the word 
 		}
 		
-		List<Character> guesses= new ArrayList<>();	// Stores all guesses into a list
+		List<Character> wrongGuesses= new ArrayList<>();	// Stores all guesses into a list
 		int DXAxis = 700;
 		int DYAxis = 100;
 		//  Repeatedly ask user for guesses and checks to see if correct
@@ -157,7 +157,7 @@ public Hangman() {
 				wrongGuess+=1;
 				guesses.add(letter);
 				//create Jlabels for each of the wrong guesses (to be displayed)
-				for (Character ch : guesses) {
+				for (Character ch : wrongGuesses) {
 		            // Create a JLabel for the current character
 		            JLabel label = new JLabel(ch.toString());
 		            label.setFont(new Font("Arial", Font.PLAIN, 24)); // Set font size and style
