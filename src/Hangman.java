@@ -137,19 +137,53 @@ public Hangman() {
         // Restore the previous stroke
         g2d.setStroke(oldStroke);
         
-        if (this.wrongGuess ==1) {
-        	int centerX = 600;
-		    int centerY = 400;
+        // Adds the head
+        if (this.wrongGuess >=1) {
+        	int centerX = 400;
+		    int centerY = 300;
 		    int radius = 50;
 		    // Draw the circle
 			g.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
         }
+		
+        // Adds the body
+        if (this.wrongGuess >=2) {
+			g2d.setStroke(new BasicStroke(5)); // Set the line thickness to 5 pixels
+			// Draw body line
+			g2d.drawLine(400, 350, 400, 550);
+			}
+		
+        // Adds the first arm
+        if (this.wrongGuess >=3 ) {
+			g2d.setStroke(new BasicStroke(5));
+			// Draw arm1
+			g2d.drawLine(350, 375,399,450);
+		}
         
+        // Adds the second arm
+		if (this.wrongGuess >=4 ) {
+			g2d.setStroke(new BasicStroke(5));
+			// Draw arm1
+			g2d.drawLine(450, 375,401,450);
+		}
+		
+		// Adds the first leg
+		if (this.wrongGuess >=5 ) {
+			g2d.setStroke(new BasicStroke(5));
+			// Draw leg1
+			g2d.drawLine(350,650,399,550);
+		}
+		
+		// Adds the second leg
+		if (this.wrongGuess >=6 ) {
+			g2d.setStroke(new BasicStroke(5));
+			// Draw leg2
+			g2d.drawLine(450,650,401,550);
+		}
 	}
-	
 	public void updateWrongGuesses(List<Character> wrongGuesses) {
 		int DXAxis = 700;//coordinates for displaying wrong guess labels
-		int DYAxis = 100;
+		int DYAxis = 200;
 		
 		//Remove wrong guess labels before adding new ones
 		Component[]components = getContentPane().getComponents();
