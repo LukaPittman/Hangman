@@ -149,7 +149,7 @@ public Hangman() {
 	
 	public void updateWrongGuesses(List<Character> wrongGuesses) {
 		int DXAxis = 700;//coordinates for displaying wrong guess labels
-		int DYAxis = 100;
+		int DYAxis = 200;
 		
 		//Remove wrong guess labels before adding new ones
 		Component[]components = getContentPane().getComponents();
