@@ -27,7 +27,8 @@ import javax.swing.SwingUtilities;
 
 public class Hangman extends JFrame{
 	private static Graphics globalGraphics; // Global Graphics object
-
+	
+	private int wrongGuess = 0;
 	
 		
 	
@@ -101,6 +102,15 @@ public Hangman() {
         words.add("css");
         return words;
     }
+	
+	public void increaseGuess() {
+		this.wrongGuess++;
+	}
+	
+	public int getGuesses() {
+		return this.wrongGuess;
+	}
+	
 	public void paint(Graphics g) {
 		super.paint(g);
 		
@@ -126,6 +136,14 @@ public Hangman() {
         g2d.drawLine(400, 200, 400, 250);
         // Restore the previous stroke
         g2d.setStroke(oldStroke);
+        
+        if (this.wrongGuess ==1) {
+        	int centerX = 600;
+		    int centerY = 400;
+		    int radius = 50;
+		    // Draw the circle
+			g.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
+        }
         
 	}
 	
@@ -159,7 +177,7 @@ public Hangman() {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> new Hangman());
 		int correctLetter = 0; //number of correct letters in word guessed from individual guess
-		int wrongGuess = 0; //wrong guessed letter (guess not in word at all)
+		//int wrongGuess = 0; //wrong guessed letter (guess not in word at all)
 		int end = 6; //max number of wrong guesses allowed (adjust for difficulty)
 
 		Hangman hangman = new Hangman(); //Creates the window
@@ -216,38 +234,21 @@ public Hangman() {
 		for(int i=0; i<characters.size(); i++) {          
 			if (characters.get(i) != letter) { //guess not any letter in chosenword
 				System.out.println("Incorrect. Try again.");
-				wrongGuess++;
+				hangman.increaseGuess();
 				wrongGuesses.add(letter);
 				//update graphics for each of the wrong guesses (to be displayed)
 				hangman.updateWrongGuesses(wrongGuesses);
 				guess = sc.nextLine();
-				if (wrongGuess==end) {//max number of wrong guesses reached
+				if (hangman.getGuesses()==end) {//max number of wrong guesses reached
 					sc.close(); //stop looking for input
 					System.out.println("Game over!");
 					break;
 				}
 			}
 			
-<<<<<<< Updated upstream
-
-				
-			if(wrongGuess==1) {
-				int centerX = 600;
-			    int centerY = 400;
-			    int radius = 50;
-			    // Draw the circle
-				globalGraphics.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
-
-=======
-				if(wrongGuess==1) {
-					int centerX = 600;
-			        int centerY = 400;
-			        int radius = 50;
-					// Draw the circle
-					g.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
-					
->>>>>>> Stashed changes
-				}
+			hangman.repaint();
+			System.out.print(hangman.getGuesses());
+			
 			for(int g=0; g<=characters.size()-1; g++) { //goes through letters in chosenword
 				if (characters.get(g) == letter) { //guess is some or 1 letter in chosenword
 					correctLetter+=1; //add correct number of letters
