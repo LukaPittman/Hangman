@@ -213,6 +213,7 @@ public Hangman() {
 			        int radius = 50;
 					// Draw the circle
 					globalGraphics.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
+					g.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
 					
 				}
 			for(int g=1; g<=characters.size(); g++) { //goes through letters in chosenword
