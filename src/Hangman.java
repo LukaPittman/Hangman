@@ -5,6 +5,7 @@ import java.util.Scanner;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import javax.swing.JButton;
+import java.awt.Component;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -128,12 +129,38 @@ public Hangman() {
         
 	}
 	
+	public void updateWrongGuesses(List<Character> wrongGuesses) {
+		int DXAxis = 700;//coordinates for displaying wrong guess labels
+		int DYAxis = 100;
+		
+		//Remove wrong guess labels before adding new ones
+		Component[]components = getContentPane().getComponents();
+	    for (Component component : components) {
+	        if (component instanceof JLabel) {
+	            getContentPane().remove(component);
+	        }
+	    }
+	    
+	    //Add wrong guess labels
+	    for (Character wrongGuessChar : wrongGuesses) {
+            // Create a JLabel for the current character
+            JLabel label = new JLabel(wrongGuessChar.toString());
+            label.setFont(new Font("Arial", Font.PLAIN, 24)); // Set font size and style
+            label.setBounds(DXAxis, DYAxis, 30,30);
+            getContentPane().add(label); // Add the label to the frame
+            DXAxis += 35;
+		}
+	    
+	    revalidate(); //revalidate the frame to reflect changes
+	    repaint(); //repaint the frame to ensure updates are shown
+	}
+	
 	// Main Method
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> new Hangman());
-		int correctLetter=0; //number of correct letters in word guessed from individual guess
-		int wrongGuess=0; //wrong guessed letter (guess not in word at all)
-		int end = 5; //max number of wrong guesses allowed (adjust for difficulty)
+		int correctLetter = 0; //number of correct letters in word guessed from individual guess
+		int wrongGuess = 0; //wrong guessed letter (guess not in word at all)
+		int end = 6; //max number of wrong guesses allowed (adjust for difficulty)
 
 		Hangman hangman = new Hangman(); //Creates the window
 		
@@ -145,6 +172,7 @@ public Hangman() {
 		int index = (int)(Math.random()*50); //Chooses random word out of the list
 		ArrayList<String> words = getWords();
 		String chosenWord = words.get(index);
+		System.out.println(chosenWord);
 		
 		List<Character> characters = new ArrayList<>();	// Separates the chosen word into a list of its individual characters
 		for( char c :chosenWord.toCharArray()) {
@@ -182,46 +210,39 @@ public Hangman() {
 			letter = guess.charAt(0); //takes the first character of the word 
 		}
 		
-		List<Character> guesses= new ArrayList<>();	// Stores all guesses into a list
+		List<Character> wrongGuesses= new ArrayList<>();	// Stores all guesses into a list
+		hangman.updateWrongGuesses(wrongGuesses); //create instance of method in Hangman class
 		//  Repeatedly ask user for guesses and checks to see if correct
-		for(int i=1; i<=characters.size(); i++) {          
-			while (characters.get(i) != letter) { //guess not any letter in chosenword
+		for(int i=0; i<characters.size(); i++) {          
+			if (characters.get(i) != letter) { //guess not any letter in chosenword
 				System.out.println("Incorrect. Try again.");
-				wrongGuess+=1;
-				guesses.add(letter);
-				//create Jlabels for each of the wrong guesses (to be displayed)
-				int DXAxis = 700;
-				int DYAxis = 100;
-				for (Character ch : guesses) {
-		            // Create a JLabel for the current character
-		            JLabel label = new JLabel(ch.toString());
-		            label.setFont(new Font("Arial", Font.PLAIN, 24)); // Set font size and style
-		            label.setBounds(DXAxis, DYAxis, 30,30);
-		            hangman.add(label); // Add the label to the frame
-		            XAxis += 35;
-				}
+				wrongGuess++;
+				wrongGuesses.add(letter);
+				//update graphics for each of the wrong guesses (to be displayed)
+				hangman.updateWrongGuesses(wrongGuesses);
 				guess = sc.nextLine();
 				if (wrongGuess==end) {//max number of wrong guesses reached
 					sc.close(); //stop looking for input
 					System.out.println("Game over!");
+					break;
 				}
 			}
 			
-				if(wrongGuess==1) {
-					int centerX = 600;
-			        int centerY = 400;
-			        int radius = 50;
-					// Draw the circle
-					globalGraphics.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
+			if(wrongGuess==1) {
+				int centerX = 600;
+			    int centerY = 400;
+			    int radius = 50;
+			    // Draw the circle
+				globalGraphics.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
 					
 				}
-			for(int g=1; g<=characters.size(); g++) { //goes through letters in chosenword
+			for(int g=0; g<=characters.size()-1; g++) { //goes through letters in chosenword
 				if (characters.get(g) == letter) { //guess is some or 1 letter in chosenword
 					correctLetter+=1; //add correct number of letters
 					//add code to print the individual label with that character 
 					
 				}
-				if (correctLetter == characters.size()) { //guessed all letters in chosenword
+				if (correctLetter == characters.size()-1) { //guessed all letters in chosenword
 					sc.close(); //stop looking for input
 					System.out.println("Game complete!");
 				}
