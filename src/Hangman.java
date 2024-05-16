@@ -228,6 +228,7 @@ public Hangman() {
 				}
 			}
 			
+<<<<<<< Updated upstream
 
 				
 			if(wrongGuess==1) {
@@ -237,6 +238,15 @@ public Hangman() {
 			    // Draw the circle
 				globalGraphics.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
 
+=======
+				if(wrongGuess==1) {
+					int centerX = 600;
+			        int centerY = 400;
+			        int radius = 50;
+					// Draw the circle
+					g.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
+					
+>>>>>>> Stashed changes
 				}
 			for(int g=0; g<=characters.size()-1; g++) { //goes through letters in chosenword
 				if (characters.get(g) == letter) { //guess is some or 1 letter in chosenword
