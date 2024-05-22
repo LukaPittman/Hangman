@@ -23,7 +23,7 @@ import javax.swing.SwingUtilities;
 
 
 
-
+  
 
 public class Hangman extends JFrame{
 	private static Graphics globalGraphics; // Global Graphics object
