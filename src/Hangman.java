@@ -231,7 +231,7 @@ public Hangman() {
 		for( char c :chosenWord.toCharArray()) {
 			characters.add(c);
 		}
-
+		System.out.println(characters.size());
 		// Creates JLabel for each of the characters in the word with the letters
 		int XAxis = 700;
 		int YAxis = 600;
@@ -266,34 +266,40 @@ public Hangman() {
 		List<Character> wrongGuesses= new ArrayList<>();	// Stores all guesses into a list
 		hangman.updateWrongGuesses(wrongGuesses); //create instance of method in Hangman class
 		//  Repeatedly ask user for guesses and checks to see if correct
-		while (hangman.getGuesses() != end) {
+		while(hangman.getGuesses() != end) {
 			for(int i=0; i<=characters.size()-1; i++) {  //goes through letters in chosenword
 				if (characters.get(i) == letter) { //guess is some or 1 letter in chosenword
 					correctLetter+=1; //add correct number of letters to total
 					thisGuessCorrect+=1; //add correct number of letters for this individual guess
 					//add code to print the individual label with that character 
-					
 				}
-				if (correctLetter == characters.size()-1) { //guessed all letters in chosenword
+	
+				if (correctLetter == characters.size()) { //guessed all letters in chosenword
 					sc.close(); //stop looking for input
 					System.out.println("Game complete!");
 				}
-			}
-			if (thisGuessCorrect == 0) { //guess not any letter in chosenword
-				System.out.println("Incorrect. Try again.");
-				hangman.increaseGuess();
-				wrongGuesses.add(letter);
-				//update graphics for each of the wrong guesses (to be displayed)
-				hangman.updateWrongGuesses(wrongGuesses);
-				guess = sc.nextLine();
-				if (hangman.getGuesses()==end) {//max number of wrong guesses reached
-					sc.close(); //stop looking for input
-					System.out.println("Game over!");
-					break;
+				else {
+					guess = sc.nextLine();
+					letter = guess.charAt(0);
+					if (thisGuessCorrect == 0) { //guess not any letter in chosenword
+						System.out.println("Incorrect. Try again.");
+						hangman.increaseGuess();
+						wrongGuesses.add(letter);
+						System.out.println(wrongGuesses); //check code
+						//update graphics for each of the wrong guesses (to be displayed)
+						hangman.updateWrongGuesses(wrongGuesses);
+						guess = sc.nextLine();
+						letter = guess.charAt(0);
+						if (hangman.getGuesses()==end) {//max number of wrong guesses reached
+							sc.close(); //stop looking for input
+							System.out.println("Game over!");
+							break;
+						}
+					}
 				}
+			//hangman.repaint();
+			//System.out.print(hangman.getGuesses());
 			}
-				hangman.repaint();
-				System.out.print(hangman.getGuesses());
 		}
 
 	}
