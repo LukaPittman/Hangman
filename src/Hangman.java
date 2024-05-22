@@ -210,7 +210,8 @@ public Hangman() {
 	// Main Method
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> new Hangman());
-		int correctLetter = 0; //number of correct letters in word guessed from individual guess
+		int correctLetter = 0; //number of correct letters in word in total guessed
+		int thisGuessCorrect = 0; //number of correct letters in word guessed by individual guess
 		//int wrongGuess = 0; //wrong guessed letter (guess not in word at all)
 		int end = 6; //max number of wrong guesses allowed (adjust for difficulty)
 
@@ -265,8 +266,20 @@ public Hangman() {
 		List<Character> wrongGuesses= new ArrayList<>();	// Stores all guesses into a list
 		hangman.updateWrongGuesses(wrongGuesses); //create instance of method in Hangman class
 		//  Repeatedly ask user for guesses and checks to see if correct
-		for(int i=0; i<characters.size(); i++) {          
-			if (characters.get(i) != letter) { //guess not any letter in chosenword
+		while (hangman.getGuesses() != end) {
+			for(int i=0; i<=characters.size()-1; i++) {  //goes through letters in chosenword
+				if (characters.get(i) == letter) { //guess is some or 1 letter in chosenword
+					correctLetter+=1; //add correct number of letters to total
+					thisGuessCorrect+=1; //add correct number of letters for this individual guess
+					//add code to print the individual label with that character 
+					
+				}
+				if (correctLetter == characters.size()-1) { //guessed all letters in chosenword
+					sc.close(); //stop looking for input
+					System.out.println("Game complete!");
+				}
+			}
+			if (thisGuessCorrect == 0) { //guess not any letter in chosenword
 				System.out.println("Incorrect. Try again.");
 				hangman.increaseGuess();
 				wrongGuesses.add(letter);
@@ -279,27 +292,8 @@ public Hangman() {
 					break;
 				}
 			}
-			
-
-
-
-		
-				
-			hangman.repaint();
-			System.out.print(hangman.getGuesses());
-			
-
-			for(int g=0; g<=characters.size()-1; g++) { //goes through letters in chosenword
-				if (characters.get(g) == letter) { //guess is some or 1 letter in chosenword
-					correctLetter+=1; //add correct number of letters
-					//add code to print the individual label with that character 
-					
-				}
-				if (correctLetter == characters.size()-1) { //guessed all letters in chosenword
-					sc.close(); //stop looking for input
-					System.out.println("Game complete!");
-				}
-			}
+				hangman.repaint();
+				System.out.print(hangman.getGuesses());
 		}
 
 	}
