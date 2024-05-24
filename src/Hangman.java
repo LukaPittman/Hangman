@@ -29,7 +29,7 @@ public class Hangman extends JFrame{
 	private List<JLabel> wrongGuessLabels = new ArrayList<>(); //store wrong guess labels
 	
 public Hangman() {
-	// Creates the JFrame and GUI //hi
+	// Creates the JFrame and GUI
 	
 	setTitle("Hangman");
 	setSize(1200, 800);
