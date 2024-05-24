@@ -29,7 +29,9 @@ public class Hangman extends JFrame{
 	private static Graphics globalGraphics; // Global Graphics object
 	
 	private int wrongGuess = 0;
-	
+	private int rightGuess = 0;
+	private int userGuess = 0;
+	private char letter2;
 		
 	
 public Hangman() {
@@ -106,10 +108,33 @@ public Hangman() {
 	public void increaseGuess() {
 		this.wrongGuess++;
 	}
-	
 	public int getGuesses() {
 		return this.wrongGuess;
 	}
+	public int checkGuess(){
+		return this.checkGuess();
+	}
+	public void incRightGuess(){
+		this.rightGuess += 1;
+	}
+	public int getRightGuess(){
+		return this.rightGuess;
+	}
+	public void changeUserGuess(int i) {
+		this.userGuess = i;
+	} 
+	public int getuserGuess() {
+		return this.userGuess;
+	}
+	
+	public void changeLetter2(char a) {
+		this.letter2 = a;
+	} 
+	public char getLetter2() {
+		return this.letter2;
+	}
+	
+	
 	
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -167,20 +192,35 @@ public Hangman() {
 			g2d.drawLine(450, 375,401,450);
 		}
 		
-		// Adds the first leg
+		// Adds the first leg/left
 		if (this.wrongGuess >=5 ) {
 			g2d.setStroke(new BasicStroke(5));
 			// Draw leg1
 			g2d.drawLine(350,650,399,550);
 		}
 		
-		// Adds the second leg
+		// Adds the second leg/right
 		if (this.wrongGuess >=6 ) {
 			g2d.setStroke(new BasicStroke(5));
 			// Draw leg2
 			g2d.drawLine(450,650,401,550);
 		}
+		
+	
+	
 	}
+	private void updateRightGuesses(List<Character> rightGuesses) {
+		this.letter2 +=1;
+		if (this.rightGuess >=1) {
+			
+			JLabel firstLetter = new JLabel("" + this.getLetter2());
+			firstLetter.setFont(new Font("Arial", Font.PLAIN, 24)); // Set font size and style
+            firstLetter.setBounds(500,400,50,50);
+            getContentPane().add(firstLetter); // Add the label to the frame
+		}
+		
+	}
+	
 	public void updateWrongGuesses(List<Character> wrongGuesses) {
 		int DXAxis = 700;//coordinates for displaying wrong guess labels
 		int DYAxis = 200;
@@ -199,7 +239,7 @@ public Hangman() {
             JLabel label = new JLabel(wrongGuessChar.toString());
             label.setFont(new Font("Arial", Font.PLAIN, 24)); // Set font size and style
             label.setBounds(DXAxis, DYAxis, 30,30);
-            getContentPane().add(label); // Add the label to the frame
+            //getContentPane().add(label); // Add the label to the frame
             DXAxis += 35;
 		}
 	    
@@ -265,12 +305,19 @@ public Hangman() {
 		
 		List<Character> wrongGuesses= new ArrayList<>();	// Stores all guesses into a list
 		hangman.updateWrongGuesses(wrongGuesses); //create instance of method in Hangman class
+		List<Character> rightGuesses = new ArrayList<>();
+		hangman.updateRightGuesses(rightGuesses);
+		
 		//  Repeatedly ask user for guesses and checks to see if correct
 		while(guess != "STOP") {
 			for(int i=0; i<=characters.size()-1; i++) {  //goes through letters in chosenword
 				if (characters.get(i) == letter) { //guess is some or 1 letter in chosenword
 					correctLetter+=1; //add correct number of letters to total
 					thisGuessCorrect+=1; //add correct number of letters for this individual guess
+					hangman.incRightGuess();
+					hangman.updateRightGuesses(rightGuesses);
+					hangman.changeUserGuess(i);
+					hangman.changeLetter2(letter);
 					//System.out.println(thisGuessCorrect);
 					System.out.println(correctLetter);
 					//add code to print the individual label with that character 
@@ -303,4 +350,5 @@ public Hangman() {
 			//System.out.print(hangman.getGuesses());
 		}
 	}
+	
 }
