@@ -329,6 +329,7 @@ public Hangman() {
 				break;
 			}
 			
+			
 			if (thisGuessCorrect == 0) { //guess not any letter in chosenword
 				System.out.println("Incorrect. Try again.");
 				hangman.increaseGuess();
