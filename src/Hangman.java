@@ -24,10 +24,7 @@ import javax.swing.SwingUtilities;
 public class Hangman extends JFrame{
 	private static Graphics globalGraphics; // Global Graphics object
 	
-	private int wrongGuess = 0;
-	private int rightGuess = 0;
-	private int userGuess = 0;
-	private char letter2;
+	private int wrongGuess = 0; //number of wrong guesses (guess not in word at all)
 	private List<JLabel> wordLabels = new ArrayList<>(); //store word labels
 	private List<JLabel> wrongGuessLabels = new ArrayList<>(); //store wrong guess labels
 	
@@ -105,30 +102,6 @@ public Hangman() {
 	public int getGuesses() {
 		return this.wrongGuess;
 	}
-	public int checkGuess(){
-		return this.checkGuess();
-	}
-	public void incRightGuess(){
-		this.rightGuess += 1;
-	}
-	public int getRightGuess(){
-		return this.rightGuess;
-	}
-	public void changeUserGuess(int i) {
-		this.userGuess = i;
-	} 
-	public int getuserGuess() {
-		return this.userGuess;
-	}
-	
-	public void changeLetter2(char a) {
-		this.letter2 = a;
-	} 
-	public char getLetter2() {
-		return this.letter2;
-	}
-	
-	
 	
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -203,17 +176,6 @@ public Hangman() {
 	
 	
 	}
-	private void updateRightGuesses(List<Character> rightGuesses) {
-		this.letter2 +=1;
-		if (this.rightGuess >=1) {
-			
-			JLabel firstLetter = new JLabel("" + this.getLetter2());
-			firstLetter.setFont(new Font("Arial", Font.PLAIN, 24)); // Set font size and style
-            firstLetter.setBounds(500,400,50,50);
-            getContentPane().add(firstLetter); // Add the label to the frame
-		}
-		
-	}
 	
 	public void updateWrongGuesses(List<Character> wrongGuesses) {
 		int DXAxis = 700;//coordinates for displaying wrong guess labels
@@ -253,9 +215,9 @@ public Hangman() {
 		SwingUtilities.invokeLater(() -> new Hangman());
 		int correctLetter = 0; //number of correct letters in word in total guessed
 		int thisGuessCorrect = 0; //number of correct letters in word guessed by individual guess
-		//int wrongGuess = 0; //wrong guessed letter (guess not in word at all)
 		int end = 6; //max number of wrong guesses allowed (adjust for difficulty)
-
+		int guesses = 0; //total number of guesses (both right and wrong)
+		
 		Hangman hangman = new Hangman(); //Creates the window
 		
 		
@@ -306,52 +268,58 @@ public Hangman() {
 		List<Integer> position= new ArrayList<>();	// Stores all position of correct guess into a list
 		List<Character> wrongGuesses= new ArrayList<>();	// Stores all guesses into a list
 		hangman.updateWrongGuesses(wrongGuesses); //create instance of method in Hangman class
-		List<Character> rightGuesses = new ArrayList<>();
-		hangman.updateRightGuesses(rightGuesses);
-		
+		List<Character> letters = new ArrayList<>(); //records specific guesses so that user cannot guess the same letter again
 		//  Repeatedly ask user for guesses and checks to see if correct
+		
+		String skip = "";
 		while(!guess.equals("STOP")) {
-			for(int i=0; i<=characters.size()-1; i++) {  //goes through letters in chosenword
-				if (characters.get(i) == letter) { //guess is some or 1 letter in chosenword
-					correctLetter+=1; //add correct number of letters to total
-					thisGuessCorrect+=1; //add correct number of letters for this individual guess
-					hangman.incRightGuess();
-					hangman.updateRightGuesses(rightGuesses);
-					hangman.changeUserGuess(i);
-					hangman.changeLetter2(letter);
-					//System.out.println(thisGuessCorrect);
-					System.out.println(correctLetter);
-					position.add(i);
-					//add code to print the individual label with that character 
-					hangman.updateCorrectGuesses(characters, position);
+			if (guesses == 0) { //havent guessed yet, so put in a filler
+				letters.add('0');
+			}
+			else {
+				letters.add(letter); //add specific guess to list
+			}
+			for(int j=0; j<=letters.size()-1; j++) {
+				if(letters.get(j) == letter) {
+					System.out.println("Already guessed. Please try again!");
+					skip = "yes"; //to skip over logic on line 287 for this guess since it is duplicate
 				}
 			}
-			if (correctLetter == characters.size()) { //guessed all letters in chosenword
-				sc.close(); //stop looking for input
-				System.out.println("Game complete!");
-				break;
-			}
-			
-			
-			if (thisGuessCorrect == 0) { //guess not any letter in chosenword
-				System.out.println("Incorrect. Try again.");
-				hangman.increaseGuess();
-				wrongGuesses.add(letter);
-				System.out.println(wrongGuesses); //check code
-				//update graphics for each of the wrong guesses (to be displayed)
-				hangman.updateWrongGuesses(wrongGuesses);
-				if (hangman.getGuesses()==end) {//max number of wrong guesses reached
+			if (!skip.equals("yes")) {
+				for(int i=0; i<=characters.size()-1; i++) {  //goes through letters in chosenword
+					if (characters.get(i) == letter) { //guess is some or 1 letter in chosenword
+						correctLetter+=1; //add correct number of letters to total
+						thisGuessCorrect+=1; //add correct number of letters for this individual guess
+						//System.out.println(thisGuessCorrect);
+						System.out.println(correctLetter);
+						position.add(i);
+						//add code to print the individual label with that character 
+						hangman.updateCorrectGuesses(characters, position);
+					}
+				}
+				if (correctLetter == characters.size()) { //guessed all letters in chosenword
 					sc.close(); //stop looking for input
-					System.out.println("Game over!");
+					System.out.println("Game complete!");
 					break;
+				}
+				
+				if (thisGuessCorrect == 0) { //guess not any letter in chosenword
+					System.out.println("Incorrect. Try again.");
+					hangman.increaseGuess();
+					wrongGuesses.add(letter);
+					System.out.println(wrongGuesses); //check code
+					//update graphics for each of the wrong guesses (to be displayed)
+					hangman.updateWrongGuesses(wrongGuesses);
+					if (hangman.getGuesses()==end) {//max number of wrong guesses reached
+						sc.close(); //stop looking for input
+						System.out.println("Game over!");
+						break;
+					}
 				}
 			}
 			thisGuessCorrect = 0; //resets thisGuessCorrect variable
 			guess = sc.nextLine();
 			letter = guess.charAt(0);
-			
-			//hangman.repaint();
-			//System.out.print(hangman.getGuesses());
 		}
 	}
 	
