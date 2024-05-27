@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 import javax.swing.JButton;
 import java.awt.Component;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -21,13 +20,15 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+
 public class Hangman extends JFrame{
+	private JTextField guessBox;
+	private JButton submitGuess;
 	private static Graphics globalGraphics; // Global Graphics object
-	
 	private int wrongGuess = 0; //number of wrong guesses (guess not in word at all)
 	private List<JLabel> wordLabels = new ArrayList<>(); //store word labels
 	private List<JLabel> wrongGuessLabels = new ArrayList<>(); //store wrong guess labels
-	
+	private char guess;
 public Hangman() {
 	// Creates the JFrame and GUI
 	
@@ -36,6 +37,15 @@ public Hangman() {
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
 	setLayout(null);
 	setResizable(false);
+	
+	guessBox = new JTextField("hello");
+	add(guessBox);
+	guessBox.setBounds(150,50 , 300, 50); // x, y, width, height
+	Font font = new Font("Arial", Font.PLAIN, 20); // Font name, style, size
+    guessBox.setFont(font);
+	submitGuess = new JButton("Submit");
+	add(submitGuess);
+	submitGuess.setBounds(150,100, 100, 50);
 }
 	// List of words used for Hang Man
 	public static ArrayList<String> getWords() {
@@ -105,6 +115,8 @@ public Hangman() {
 	
 	public void paint(Graphics g) {
 		super.paint(g);
+		
+	
 		
 	    g.setColor(Color.BLACK);
 
@@ -209,9 +221,29 @@ public Hangman() {
 		revalidate();
 		repaint();
 	}
+	submitGuess.addActionListener(new ActionListener() { 
+		  @Override
+		  public void actionPerformed(ActionEvent e) {
+			  String text = guessBox.getText().trim();
+			  this.Guess = text;
+			  
+			  
+			  
+		  } 
+			
+	});
+	
+	
 	
 	// Main Method
 	public static void main(String[] args) {
+		
+        // Add the JTextField to the JFrame
+        
+
+        // Make the frame visible
+        
+		
 		SwingUtilities.invokeLater(() -> new Hangman());
 		int correctLetter = 0; //number of correct letters in word in total guessed
 		int thisGuessCorrect = 0; //number of correct letters in word guessed by individual guess
