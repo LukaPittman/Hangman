@@ -289,13 +289,21 @@ public Hangman() {
 
 		String guess = sc.nextLine();   // Checks if guess is a letter or a word
 		char letter=' ';//default first guess
-
-		if (guess.length() > 1) {
-			//This is a word
-			System.out.println("Incorrect. Try again."); // Guess is wrong
+		
+		if (guess.length() > 1) { //This is a word
 			guess = sc.nextLine();
 		} else {
 			letter = guess.charAt(0); //takes the first character of the word 
+			if (letter == ' ' || letter == '0') {//not valid guess, so should prompt user to guess again
+				System.out.println("Not a valid guess. Try again.");
+				guess = sc.nextLine();
+				
+				if (guess.length() > 1) { //This is a word
+					guess = sc.nextLine();
+				} else {
+					letter = guess.charAt(0); //takes the first character of the word 
+				}
+			}
 		}
 		List<Integer> position= new ArrayList<>();	// Stores all position of correct guess into a list
 		List<Character> wrongGuesses= new ArrayList<>();	// Stores all guesses into a list
@@ -305,16 +313,18 @@ public Hangman() {
 		
 		String skip = "";
 		while(!guess.equals("STOP")) {
-			if (guesses == 0) { //havent guessed yet, so put in a filler
-				letters.add('0');
+			if (guesses == 0) {
+				guesses++; //add number of guesses so when it runs again it will add the guess
 			}
-			else {
-				letters.add(letter); //add specific guess to list
-			}
+			System.out.println(letters);
 			for(int j=0; j<=letters.size()-1; j++) {
 				if(letters.get(j) == letter) {
+					if (skip == "yes") {
+						System.out.println("Already guessed. Please try again!");
+						break; //stop checking because it is already a duplicate guess
+					}
 					System.out.println("Already guessed. Please try again!");
-					skip = "yes"; //to skip over logic on line 287 for this guess since it is duplicate
+					skip = "yes"; //to skip over logic on line 293-324 for this guess since it is duplicate
 				}
 			}
 			if (!skip.equals("yes")) {
@@ -350,6 +360,9 @@ public Hangman() {
 				}
 			}
 			thisGuessCorrect = 0; //resets thisGuessCorrect variable
+			letters.add(letter); //add specific guess to list
+			guesses++;
+			skip = "no"; //reset variable
 			guess = sc.nextLine();
 			letter = guess.charAt(0);
 		}
