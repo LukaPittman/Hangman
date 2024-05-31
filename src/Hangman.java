@@ -1,5 +1,6 @@
 // Imports
 import java.util.ArrayList;
+import static javax.swing.JOptionPane.showMessageDialog;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Arrays;
@@ -19,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import java.lang.*;
 
 
 public class Hangman extends JFrame{
@@ -29,24 +31,45 @@ public class Hangman extends JFrame{
 	private List<JLabel> wordLabels = new ArrayList<>(); //store word labels
 	private List<JLabel> wrongGuessLabels = new ArrayList<>(); //store wrong guess labels
 	private char guess;
-public Hangman() {
-	// Creates the JFrame and GUI
+	public String clicked = "No";
 	
-	setTitle("Hangman");
-	setSize(1200, 800);
-	setDefaultCloseOperation(EXIT_ON_CLOSE);
-	setLayout(null);
-	setResizable(false);
+	public Hangman() {
+		// Creates the JFrame and GUI
+		
+		setTitle("Hangman");
+		setSize(1200, 800);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLayout(null);
+		setResizable(false);
+		
+		guessBox = new JTextField("hello");
+		add(guessBox);
+		guessBox.setBounds(150,50 , 300, 50); // x, y, width, height
+		Font font = new Font("Arial", Font.PLAIN, 20); // Font name, style, size
+	    guessBox.setFont(font);
+		submitGuess = new JButton("Submit");
+		add(submitGuess);
+		submitGuess.setBounds(150,100, 100, 50);
+		
+		submitGuess.addActionListener(new ActionListener() { 
+			  @Override
+			  public void actionPerformed(ActionEvent e) {
+				  String text = guessBox.getText().trim();
+				  clicked = "Yes";
+				  if (text.length() > 1) {
+					  //This is a word
+					  showMessageDialog(null, "Please only input letters");
+				  } else {
+					  guess = text.charAt(0);
+					  
+				  }
+				  
+				  
+			  } 
+				
+		});
+	}
 	
-	guessBox = new JTextField("hello");
-	add(guessBox);
-	guessBox.setBounds(150,50 , 300, 50); // x, y, width, height
-	Font font = new Font("Arial", Font.PLAIN, 20); // Font name, style, size
-    guessBox.setFont(font);
-	submitGuess = new JButton("Submit");
-	add(submitGuess);
-	submitGuess.setBounds(150,100, 100, 50);
-}
 	// List of words used for Hang Man
 	public static ArrayList<String> getWords() {
 		// The list
@@ -105,13 +128,37 @@ public Hangman() {
         words.add("css");
         return words;
     }
-	
+	public void changeClicked(String No) {
+		this.clicked = "No";
+	}
+	public String getClicked() {
+		return this.clicked;
+	}
 	public void increaseGuess() {
 		this.wrongGuess++;
 	}
 	public int getGuesses() {
 		return this.wrongGuess;
 	}
+	
+	public void changeGuess(char a) {
+		this.guess = a;
+	
+	}
+	public char getGuessChar() {
+		while (!clicked.equals("Yes")) {
+			try {
+				Thread.sleep(100);
+			}catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		clicked = "No";
+		return this.guess;
+		
+		
+	}
+
 	
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -210,7 +257,7 @@ public Hangman() {
             DXAxis += 35;
 		}
 	    
-	    revalidate(); //revalidate the frame to reflect changes
+	    revalidate(); //Revalidated the frame to reflect changes
 	    repaint(); //repaint the frame to ensure updates are shown
 	}
 	public void updateCorrectGuesses(List<Character> characters, List<Integer> positions) {
@@ -221,17 +268,9 @@ public Hangman() {
 		revalidate();
 		repaint();
 	}
-	submitGuess.addActionListener(new ActionListener() { 
-		  @Override
-		  public void actionPerformed(ActionEvent e) {
-			  String text = guessBox.getText().trim();
-			  this.Guess = text;
-			  
-			  
-			  
-		  } 
-			
-	});
+	
+	
+	
 	
 	
 	
@@ -287,9 +326,10 @@ public Hangman() {
 		hangman.setVisible(true);
 		
 
-		String guess = sc.nextLine();   // Checks if guess is a letter or a word
-		char letter=' ';//default first guess
-		
+		char guess = hangman.getGuessChar(); // Checks if guess is a letter or a word
+		//char letter=' ';//default first guess
+		String guess2 = Character.toString(guess);
+		/*
 		if (guess.length() > 1) { //This is a word
 			guess = sc.nextLine();
 		} else {
@@ -304,7 +344,8 @@ public Hangman() {
 					letter = guess.charAt(0); //takes the first character of the word 
 				}
 			}
-		}
+		}*/
+		
 		List<Integer> position= new ArrayList<>();	// Stores all position of correct guess into a list
 		List<Character> wrongGuesses= new ArrayList<>();	// Stores all guesses into a list
 		hangman.updateWrongGuesses(wrongGuesses); //create instance of method in Hangman class
@@ -312,13 +353,13 @@ public Hangman() {
 		//  Repeatedly ask user for guesses and checks to see if correct
 		
 		String skip = "";
-		while(!guess.equals("STOP")) {
+		while(guess != '!') {
 			if (guesses == 0) {
 				guesses++; //add number of guesses so when it runs again it will add the guess
 			}
 			System.out.println(letters);
 			for(int j=0; j<=letters.size()-1; j++) {
-				if(letters.get(j) == letter) {
+				if(letters.get(j) == guess) {
 					if (skip == "yes") {
 						System.out.println("Already guessed. Please try again!");
 						break; //stop checking because it is already a duplicate guess
@@ -329,7 +370,7 @@ public Hangman() {
 			}
 			if (!skip.equals("yes")) {
 				for(int i=0; i<=characters.size()-1; i++) {  //goes through letters in chosenword
-					if (characters.get(i) == letter) { //guess is some or 1 letter in chosenword
+					if (characters.get(i) == guess) { //guess is some or 1 letter in chosenword
 						correctLetter+=1; //add correct number of letters to total
 						thisGuessCorrect+=1; //add correct number of letters for this individual guess
 						//System.out.println(thisGuessCorrect);
@@ -342,29 +383,32 @@ public Hangman() {
 				if (correctLetter == characters.size()) { //guessed all letters in chosenword
 					sc.close(); //stop looking for input
 					System.out.println("Game complete!");
+					showMessageDialog(null, "Good Game, you won");
 					break;
+					
 				}
 				
 				if (thisGuessCorrect == 0) { //guess not any letter in chosenword
 					System.out.println("Incorrect. Try again.");
 					hangman.increaseGuess();
-					wrongGuesses.add(letter);
+					wrongGuesses.add(guess);
 					System.out.println(wrongGuesses); //check code
 					//update graphics for each of the wrong guesses (to be displayed)
 					hangman.updateWrongGuesses(wrongGuesses);
 					if (hangman.getGuesses()==end) {//max number of wrong guesses reached
 						sc.close(); //stop looking for input
 						System.out.println("Game over!");
+						showMessageDialog(null, "Good Game, you Lost");
 						break;
 					}
 				}
 			}
 			thisGuessCorrect = 0; //resets thisGuessCorrect variable
-			letters.add(letter); //add specific guess to list
+			letters.add(guess); //add specific guess to list
 			guesses++;
 			skip = "no"; //reset variable
-			guess = sc.nextLine();
-			letter = guess.charAt(0);
+			guess = hangman.getGuessChar();
+			
 		}
 	}
 	
