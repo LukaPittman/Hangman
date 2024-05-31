@@ -19,7 +19,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-
+import javax.swing.ImageIcon;
+import java.net.URL;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 
 public class Hangman extends JFrame{
 	private JTextField guessBox;
@@ -29,6 +35,7 @@ public class Hangman extends JFrame{
 	private List<JLabel> wordLabels = new ArrayList<>(); //store word labels
 	private List<JLabel> wrongGuessLabels = new ArrayList<>(); //store wrong guess labels
 	private char guess;
+	private Image headImage; //image for head
 public Hangman() {
 	// Creates the JFrame and GUI
 	
@@ -38,14 +45,24 @@ public Hangman() {
 	setLayout(null);
 	setResizable(false);
 	
-	guessBox = new JTextField("hello");
+	guessBox = new JTextField(" ");
 	add(guessBox);
-	guessBox.setBounds(150,50 , 300, 50); // x, y, width, height
+	guessBox.setBounds(150, 50, 300, 50); // x, y, width, height
 	Font font = new Font("Arial", Font.PLAIN, 20); // Font name, style, size
     guessBox.setFont(font);
 	submitGuess = new JButton("Submit");
 	add(submitGuess);
 	submitGuess.setBounds(150,100, 100, 50);
+	
+	try {
+		//load head image
+		headImage = ImageIO.read(new File("src/Stick_Figure_Head.jpg"));
+		if (headImage == null) {
+			System.err.println("Image not found!");
+		}
+	} catch (IOException e) { //in the case that it cant find the image
+		e.printStackTrace();
+	}
 }
 	// List of words used for Hang Man
 	public static ArrayList<String> getWords() {
@@ -143,18 +160,23 @@ public Hangman() {
         
         // Adds the head
         if (this.wrongGuess >=1) {
+        	if (headImage != null) {
+        		g.drawImage(headImage, 342, 250, 120, 120, this);
+        	} else {
+        		System.err.println("head image not loaded.");
+        	}
         	int centerX = 400;
 		    int centerY = 300;
 		    int radius = 50;
 		    // Draw the circle
-			g.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
+			//g.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
         }
 		
         // Adds the body
         if (this.wrongGuess >=2) {
-			g2d.setStroke(new BasicStroke(5)); // Set the line thickness to 5 pixels
+			g2d.setStroke(new BasicStroke(3)); // Set the line thickness to 5 pixels
 			// Draw body line
-			g2d.drawLine(400, 350, 400, 550);
+			g2d.drawLine(402, 400, 402, 500);
 			}
 		
         // Adds the first arm
@@ -221,7 +243,7 @@ public Hangman() {
 		revalidate();
 		repaint();
 	}
-	submitGuess.addActionListener(new ActionListener() { 
+	/*submitGuess.addActionListener(new ActionListener() { 
 		  @Override
 		  public void actionPerformed(ActionEvent e) {
 			  String text = guessBox.getText().trim();
@@ -231,7 +253,7 @@ public Hangman() {
 			  
 		  } 
 			
-	});
+	});*/
 	
 	
 	
@@ -281,7 +303,6 @@ public Hangman() {
             
             
 		}
-		
 		
 		hangman.setLocationRelativeTo(null);
 		hangman.setVisible(true);
