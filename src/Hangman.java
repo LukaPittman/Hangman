@@ -20,7 +20,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+
 import java.lang.*;
+
+
+import javax.swing.ImageIcon;
+import java.net.URL;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 
 
 public class Hangman extends JFrame{
@@ -32,6 +42,7 @@ public class Hangman extends JFrame{
 	private List<JLabel> wrongGuessLabels = new ArrayList<>(); //store wrong guess labels
 	private char guess;
 	public String clicked = "No";
+	private Image headImage; //image for head
 	
 	public Hangman() {
 		// Creates the JFrame and GUI
@@ -68,8 +79,21 @@ public class Hangman extends JFrame{
 			  } 
 				
 		});
-	}
 	
+	
+
+	
+	try {
+		//load head image
+		headImage = ImageIO.read(new File("src/Stick_Figure_Head.jpg"));
+		if (headImage == null) {
+			System.err.println("Image not found!");
+		}
+	} catch (IOException e) { //in the case that it cant find the image
+		e.printStackTrace();
+	}
+}
+
 	// List of words used for Hang Man
 	public static ArrayList<String> getWords() {
 		// The list
@@ -190,18 +214,23 @@ public class Hangman extends JFrame{
         
         // Adds the head
         if (this.wrongGuess >=1) {
+        	if (headImage != null) {
+        		g.drawImage(headImage, 342, 250, 120, 120, this);
+        	} else {
+        		System.err.println("head image not loaded.");
+        	}
         	int centerX = 400;
 		    int centerY = 300;
 		    int radius = 50;
 		    // Draw the circle
-			g.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
+			//g.fillOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
         }
 		
         // Adds the body
         if (this.wrongGuess >=2) {
-			g2d.setStroke(new BasicStroke(5)); // Set the line thickness to 5 pixels
+			g2d.setStroke(new BasicStroke(3)); // Set the line thickness to 5 pixels
 			// Draw body line
-			g2d.drawLine(400, 350, 400, 550);
+			g2d.drawLine(402, 400, 402, 500);
 			}
 		
         // Adds the first arm
@@ -268,9 +297,7 @@ public class Hangman extends JFrame{
 		revalidate();
 		repaint();
 	}
-	
-	
-	
+
 	
 	
 	
@@ -320,7 +347,6 @@ public class Hangman extends JFrame{
             
             
 		}
-		
 		
 		hangman.setLocationRelativeTo(null);
 		hangman.setVisible(true);
