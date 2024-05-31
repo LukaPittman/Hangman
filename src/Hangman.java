@@ -40,6 +40,7 @@ public class Hangman extends JFrame{
 	private char guess;
 	public String clicked = "No";
 	private Image headImage; //image for head
+	private Image background; //image for background
 	
 	public Hangman() {
 		// Creates the JFrame and GUI
@@ -181,6 +182,20 @@ public class Hangman extends JFrame{
 	public void paint(Graphics g) {
 		super.paint(g);
 		
+		//drawing background
+        try {
+			background = ImageIO.read(new File("src/Background_Image.jpg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (background == null) {
+			System.err.println("Image not found!");
+		}
+        if (background != null) {
+    		g.drawImage(background, 250, 245, 400, 400, this);
+    	} else {
+    		System.err.println("background image not loaded.");
+    	}
 	
 		
 	    g.setColor(Color.BLACK);
