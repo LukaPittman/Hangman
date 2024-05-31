@@ -20,10 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-
 import java.lang.*;
-
-
 import javax.swing.ImageIcon;
 import java.net.URL;
 import java.io.File;
@@ -53,7 +50,7 @@ public class Hangman extends JFrame{
 		setLayout(null);
 		setResizable(false);
 		
-		guessBox = new JTextField("hello");
+		guessBox = new JTextField(" ");
 		add(guessBox);
 		guessBox.setBounds(150,50 , 300, 50); // x, y, width, height
 		Font font = new Font("Arial", Font.PLAIN, 20); // Font name, style, size
@@ -79,9 +76,6 @@ public class Hangman extends JFrame{
 			  } 
 				
 		});
-	
-	
-
 	
 	try {
 		//load head image
