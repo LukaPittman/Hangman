@@ -230,35 +230,35 @@ public class Hangman extends JFrame{
         if (this.wrongGuess >=2) {
 			g2d.setStroke(new BasicStroke(3)); // Set the line thickness to 5 pixels
 			// Draw body line
-			g2d.drawLine(402, 400, 402, 500);
+			g2d.drawLine(402, 370, 402, 520);
 			}
 		
         // Adds the first arm
         if (this.wrongGuess >=3 ) {
-			g2d.setStroke(new BasicStroke(5));
+			g2d.setStroke(new BasicStroke(3));
 			// Draw arm1
-			g2d.drawLine(350, 375, 399, 450);
+			g2d.drawLine(351, 375, 401, 450);
 		}
         
         // Adds the second arm
 		if (this.wrongGuess >=4 ) {
-			g2d.setStroke(new BasicStroke(5));
+			g2d.setStroke(new BasicStroke(3));
 			// Draw arm1
-			g2d.drawLine(450, 375, 401, 450);
+			g2d.drawLine(452, 375, 402, 450);
 		}
 		
 		// Adds the first leg/left
 		if (this.wrongGuess >=5 ) {
-			g2d.setStroke(new BasicStroke(5));
+			g2d.setStroke(new BasicStroke(3));
 			// Draw leg1
-			g2d.drawLine(350, 650, 399, 550);
+			g2d.drawLine(350, 650, 401, 520);
 		}
 		
 		// Adds the second leg/right
 		if (this.wrongGuess >=6 ) {
-			g2d.setStroke(new BasicStroke(5));
+			g2d.setStroke(new BasicStroke(3));
 			// Draw leg2
-			g2d.drawLine(450, 650, 401, 550);
+			g2d.drawLine(451, 650, 402, 520);
 		}
 		
 	
