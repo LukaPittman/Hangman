@@ -20,10 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-
 import java.lang.*;
-
-
 import javax.swing.ImageIcon;
 import java.net.URL;
 import java.io.File;
@@ -53,7 +50,7 @@ public class Hangman extends JFrame{
 		setLayout(null);
 		setResizable(false);
 		
-		guessBox = new JTextField("hello");
+		guessBox = new JTextField(" ");
 		add(guessBox);
 		guessBox.setBounds(150,50 , 300, 50); // x, y, width, height
 		Font font = new Font("Arial", Font.PLAIN, 20); // Font name, style, size
@@ -79,9 +76,6 @@ public class Hangman extends JFrame{
 			  } 
 				
 		});
-	
-	
-
 	
 	try {
 		//load head image
@@ -235,28 +229,28 @@ public class Hangman extends JFrame{
 		
         // Adds the first arm
         if (this.wrongGuess >=3 ) {
-			g2d.setStroke(new BasicStroke(5));
+			g2d.setStroke(new BasicStroke(3));
 			// Draw arm1
 			g2d.drawLine(350, 375, 399, 450);
 		}
         
         // Adds the second arm
 		if (this.wrongGuess >=4 ) {
-			g2d.setStroke(new BasicStroke(5));
+			g2d.setStroke(new BasicStroke(3));
 			// Draw arm1
 			g2d.drawLine(450, 375, 401, 450);
 		}
 		
 		// Adds the first leg/left
 		if (this.wrongGuess >=5 ) {
-			g2d.setStroke(new BasicStroke(5));
+			g2d.setStroke(new BasicStroke(3));
 			// Draw leg1
 			g2d.drawLine(350, 650, 399, 550);
 		}
 		
 		// Adds the second leg/right
 		if (this.wrongGuess >=6 ) {
-			g2d.setStroke(new BasicStroke(5));
+			g2d.setStroke(new BasicStroke(3));
 			// Draw leg2
 			g2d.drawLine(450, 650, 401, 550);
 		}
